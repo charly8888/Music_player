@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="">
+    <script src="https://kit.fontawesome.com/b4b31d3eba.js" crossorigin="anonymous"></script>
+    <script defer src="js/main.js"></script>
+    <title>Music Player</title>
 </head>
 <body>
-    
+    <main class="player">
+
+        <h1 class="title" id="title"></h1>
+
+        <img src=""   class="cover" id="cover" />
+
+        <audio src="" id="audio"></audio>
+
+        <div class="progress-container">
+            <section class="progress"></section>
+        </div>
+
+        <section class="controls">
+            <button class="prev"><i id="prev" class="fas fa-backward"></i></button>
+            <button class="play"><i id="play" class="fas fa-play"></i></i></button>
+            <button class="next"><i id="next" class="fas fa-forward"></i></button>
+        </section>
+
+        <ul class="songs" id="songs">
+            <!-- <li><a class="activo" href="#">Song 1</a></li>
+            <li><a href="#">Song 2</a></li>
+            <li><a href="#">Song 3</a></li> -->
+        </ul>
+    </main>
 </body>
 </html>
