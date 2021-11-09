@@ -54,7 +54,7 @@ body{
 
 .progress{
     background-color: var(--light-purple);
-    width: 50%;
+    width: 0%;
     height: 100%;
 }
 

@@ -29,6 +29,26 @@ const title = document.getElementById("title")
 const prev = document.getElementById("prev")
 const play = document.getElementById("play")
 const next = document.getElementById("next")
+const progress = document.getElementById("progress")
+const progressContainer = document.getElementById("progress-container")
+progressContainer.addEventListener("click", setProgress)
+
+//Escuchar el elemento AUDIO
+
+audio.addEventListener("timeupdate", updateProgress)
+
+//Escuchar clicks en los controles
+
+play.addEventListener("click", ()=> {
+    if(audio.paused){
+        playSong()
+    }else{
+        pauseSong()
+    }
+})
+
+next.addEventListener("click", () => nextSong())
+prev.addEventListener("click", () => prevSong())
 
 //Cargar canciones y mostrar el listado
 
@@ -55,13 +75,32 @@ function loadSong(songIndex){
         changeActiveClass(actualSong, songIndex)
         actualSong = songIndex
         audio.src= "audio/" + songList[songIndex].file
-        audio.play()
-        updateControls()
+        playSong()
         changeCover(songIndex)
         changeSongTitle(songIndex)
 
     }
 }
+
+//Actualizar barra de progreso de la canción
+
+function updateProgress(event){
+    //Total y el actual
+    const {duration, currentTime} = event.srcElement
+    const percent = (currentTime/duration*100)
+    console.log(percent)
+    progress.style.width = percent + "%"
+}
+
+//Hacer la barra de progreso clickeable
+
+function setProgress(event){
+    const totalWidth = this.offsetWidth
+    const progressWidth = event.offsetX
+    const current = (progressWidth/totalWidth) * audio.duration
+    audio.currentTime = current
+}
+
 //Actualizar controles
 
 function updateControls(){
@@ -71,10 +110,22 @@ function updateControls(){
     }else{
         play.classList.remove("fa-play")
         play.classList.add("fa-pause")
-
     }
 }
 
+//Reproducir canción
+function playSong(){
+    if(actualSong !== null){
+        audio.play()
+        updateControls()
+    }
+}
+
+//Pausar canción
+function pauseSong(){
+    audio.pause()
+    updateControls()
+}
 //Cambiar clase activa
 
 function changeActiveClass(lastIndex, newIndex){
@@ -85,7 +136,7 @@ function changeActiveClass(lastIndex, newIndex){
     links[newIndex].classList.add("activo")
 }
 
-// Cambiar el cover de la cancion
+// Cambiar el cover de la canción
 
 function changeCover(songIndex){
     cover.src = "img/" + songList[songIndex].cover
@@ -96,5 +147,24 @@ function changeCover(songIndex){
 function changeSongTitle (songIndex){
     title.innerText = songList[songIndex].title
 }
+
+//Prev song
+function prevSong(){
+    if(actualSong > 0){
+        loadSong(actualSong - 1)
+    }else{
+        loadSong(songList.length - 1)
+    }
+}
+//Next song
+function nextSong(){
+    if(actualSong < songList.length - 1 ){
+        loadSong(actualSong + 1)
+    }else{
+        loadSong(0)
+    }
+}
+//Lanzar siguiente canción cuando se acaba la actual
+
 // GO
 loadSongs()
