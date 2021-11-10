@@ -165,6 +165,6 @@ function nextSong(){
     }
 }
 //Lanzar siguiente canción cuando se acaba la actual
-
+audio.addEventListener("ended", () => nextSong())
 // GO
 loadSongs()
